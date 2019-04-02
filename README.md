@@ -13,14 +13,19 @@ User can either type the urls seperated by commas or upload file with urls seper
  - Microservices
  
  
+ # Requirements 
+  - Nodejs, npm package manager
+  - Mongodb 
+  
+ 
  # Architecture
- Application is designed in microservice architecture. There are 3 services. Frontend, Backend and Screenshot service itself runs independently. 
+ Application is designed in microservice architecture. There are 3 services. Frontend, Backend and Screenshot service itself runs independently communicated in request/respond manner. 
  
  
  # Installation
  
  ```
- git clone ...
+ git clone https://github.com/Samir692/ScreenshotAsService.git
  cd ScreenshotAsService
  npm install
  ```
