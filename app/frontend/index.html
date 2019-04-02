@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html ng-app="end-user">
+<head>
+    <title>End User</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding"><!-- this is for removing character encoding error--> 
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js" ></script>
+    <!-- <script src="./angular-sanitize.js"></script> -->
+<script>
+    angular.module('end-user', []).controller('Controller', ['$scope', '$http', function($scope, $http){
+        console.log("called");
+        $scope.status = "Ready";
+        $scope.websitesM = "";
+        $scope.usernameM = "";
+        $scope.fileDirM = "";
+        $scope.fileDirFinal = ""
+        
+        $scope.submitForm = function(){
+            
+            $scope.status = "Loading..";
+            var baseurl = "http://localhost:5000" // will be updated in production
+
+            var links = document.getElementById("websites").value;
+            var username = document.getElementById("username").value;
+            var finalDirectory = document.getElementById("fileDirF").value;
+
+            console.log("submitted = ", links, " ", finalDirectory);
+
+            $http({
+                method : "POST",
+                url : baseurl + "/api/screenshot",
+                data: {    
+                    "targetDirectory": finalDirectory,    
+                    "username":username,
+                    "links": links,
+                    "fileName": $scope.fileDirM
+            }
+            }).then(function (response){
+                console.log(response)
+                var message = response.data.message;      
+                console.log(message)
+                if(message.status === "success" || message.status === "partial"){
+                    $scope.status = "Success";
+                }  
+                else{
+                    $scope.status = "Failed, try again.";
+                }
+            },function onError(response) {
+                console.log("err")
+                console.log(response);
+                $scope.status = "Failed, try again.";
+            });                                         
+              
+
+        }
+    }])
+
+</script>
+
+</head>
+
+
+<body ng-controller="Controller">
+    <div id="main">
+        <form ng-submit="submitForm()">
+            Username: <br>
+            <input type="text" name="username" placeholder="username" id="username" ng-model="usernameM" /><br><br>
+            <div  ng-show="!fileOption">
+                Websites(seperated by semicolon): <br>
+                <input type="text" name="websites" placeholder="websites" id="websites" ng-model="websitesM"/>
+            </div>
+
+            <input type="checkbox" name="file reading" ng-model="fileOption">use file upload option<br><br><br>
+            <div ng-show="fileOption">
+                File directory to read website links <br>
+                <input type="text" name="fileDir" placeholder="directory" id="fileDir" ng-model="fileDirM" />
+            </div>
+
+            Directory you want to store images to:<br>
+            <input type="text" name="fileDirF" placeholder="directory" id="fileDirF" ng-model="fileDirFinal" /><br><br>
+            <input type="submit" value="Submit" ng-show="(websitesM.length > 0 || fileDirM.length > 0 ) && usernameM.length > 0 && fileDirFinal.length > 0">
+            
+            <div>
+                <p>{{status}}</p>
+            </div>
+        </form>
+
+    </div>
+</body>
+
+
+</html>

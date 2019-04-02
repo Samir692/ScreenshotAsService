@@ -1,0 +1,20 @@
+{
+    "apps": [
+        {
+            "name"      : "backend",
+            "script"    : "app/screenshot-backend.js",
+            "watch"     : "app/screenshot-backend.js"
+        },
+        {
+            "name"      : "screenshot",
+            "script"    : "app/screenshot-service.js",
+            "watch"     : "app/screenshot-service.js"
+        },
+        {
+            "name"      : "frontend",
+            "script"    : "app/frontend/frontend-server.js",
+            "watch"     : "app/frontend/frontend-server.js"
+        }
+
+    ]
+}
