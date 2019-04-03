@@ -1,8 +1,8 @@
 # ScreenshotAsService
 
-Screenshot As Service is a web application which enables users to mention the url of their desired website(s) and get the screenshots of them to their machine. For first release application is designed for linux(Mac) operating systems because of file structure syntax differences. 
+Screenshot As Service is a web application which enables users to mention the url of their desired website(s) and get the screenshots of them to their machine.
 
-User can either type the urls seperated by commas or upload file with urls seperated by comma or new line. When user fills all the required fields and submits the form the images will be zipped and downloaded to their personal machine.
+User can either type the urls seperated by commas or upload file with urls seperated by comma or new line. When user fills all the required fields and submits the form the images will be zipped and downloaded to their personal machine. User can get all the screenshots by just leaving websites form empty and filling username and directory fields.
 
 
 
@@ -31,12 +31,12 @@ User can either type the urls seperated by commas or upload file with urls seper
  ```
  
  # Running the system
- As mentioned there are 3 services. It is suggasted to download [P2](http://pm2.keymetrics.io/) .
+ As mentioned there are 3 services. It is suggested to download [P2](http://pm2.keymetrics.io/) .
  
  ```
  pm2 start services.json
  ```
- 
+ Make sure mongo server is running.
  This will run all the 3 services you need. 
  Backend service is available at [http://localhost:5000](http://localhost:5000)
  Frontend service is available at [http://localhost:5001](http://localhost:5001)
