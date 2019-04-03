@@ -3,6 +3,7 @@ const cote = require('cote'), // microservice library
       phantomJS = require('phantom'), //library for creating browser and screenshot
       AdmZip = require('adm-zip'), //zipping library
       fs = require('fs'), //file management library
+      path = require('path'),
       stat = fs.statSync;
 
 require('../models')
@@ -84,7 +85,7 @@ function takeScreenshots(instance, userObj){
     
     var link = userObj.links;
     var userID = userObj.userID;
-    var dir = './app/users_data/' + userID; // to store images in file structure under username
+   var dir = path.join(__dirname, "users_data", userID) // to store images in file structure under username
    
 
     if (!fs.existsSync(dir)){
@@ -109,7 +110,8 @@ function takeScreenshots(instance, userObj){
         })
     })
     .then(function(content){
-        targetLocation = dir + "/image" +  new Date().toString() + ".png";
+        var filename = new Date().toString().replace(/\s|:/g, '') + ".jpg"
+        targetLocation = path.join(dir, filename);
         page.render(targetLocation); //save images to file structure.
         var imageObj = {
             "username":userID,
@@ -198,7 +200,8 @@ function getImages(data){
             return;
         }  
 
-        var finalDestination = targetLocation  + "/" + username + "-" + new Date().toString();
+        var filename = username + "-" + new Date().toString().replace(/\s|:/g, '') + ".zip";
+        var finalDestination = path.join(targetLocation, filename);
         console.log("Screenshots are succesfully downloaded to "+ finalDestination);
         zipImages(allImagesPaths, finalDestination);
     })
